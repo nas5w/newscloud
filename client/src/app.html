@@ -1,0 +1,18 @@
+<template>
+	<div id="chart"></div>
+  <h1>Feed</h1>
+  <table>
+  	<thead>
+  		<tr>
+  			<th>Title</th>
+  			<th>Date</th>
+  		</tr>
+  	</thead>
+  	<tbody>
+  		<tr repeat.for="item of feed">
+  			<td>${item.title}</td>
+  			<td>${item.date}</td>
+  		</tr>
+  	</tbody>
+  </table>
+</template>
