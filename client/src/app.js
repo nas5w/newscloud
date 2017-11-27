@@ -63,7 +63,7 @@ export class App {
 
   wordcloud() {
 
-		var svg_location = "#chart";
+		var svg_location = '#chart';
     var width = $('#container').width();
     var height = 500;
 		var fill = d3.scaleOrdinal(d3.schemeCategory20);
@@ -84,25 +84,25 @@ export class App {
       .text(function(d) { return d.key; })
       .rotate(function() { return ~~(Math.random() * 2) * 90; })
       .font('Impact')
-      .on("end", draw)
+      .on('end', draw)
       .start();
 
     function draw(words) {
     	$('svg').remove();
-      d3.select(svg_location).append("svg")
-          .attr("width", width)
-          .attr("height", height)
-        .append("g")
-          .attr("transform", "translate(" + [width >> 1, height >> 1] + ")")
-        .selectAll("text")
+      d3.select(svg_location).append('svg')
+          .attr('width', width)
+          .attr('height', height)
+        .append('g')
+          .attr('transform', `translate(${[width >> 1, height >> 1]})`)
+        .selectAll('text')
           .data(words)
-        .enter().append("text")
-          .style("font-size", function(d) { return xScale(d.value) + "px"; })
-          .style("font-family", "Impact")
-          .style("fill", function(d, i) { return fill(i); })
-          .attr("text-anchor", "middle")
-          .attr("transform", function(d) {
-            return "translate(" + [d.x, d.y] + ")rotate(" + d.rotate + ")";
+        .enter().append('text')
+          .style('font-size', function(d) { return `${xScale(d.value)}px`; })
+          .style('font-family', 'Impact')
+          .style('fill', function(d, i) { return fill(i); })
+          .attr('text-anchor', 'middle')
+          .attr('transform', function(d) {
+            return `translate(${[d.x, d.y]})rotate(${d.rotate})`;
           })
           .text(function(d) { return d.key; })
           .attr('cursor', 'pointer')
