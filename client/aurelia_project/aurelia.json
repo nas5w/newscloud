@@ -131,6 +131,7 @@
           },
           "d3-dispatch",
           "d3-cloud",
+          "moment",
           "text",
           {
             "name": "aurelia-templating-resources",

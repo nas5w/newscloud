@@ -9,43 +9,66 @@ export class App {
 
   constructor(http) {
 
-  	this.feed = [];
-  	this.words = {};
-
 		this.http = http.configure(x => {
 		    x.withBaseUrl('http://localhost:3000');
-		  });		
+		  });
+
+  }
+
+  attached() {
+  	this.fetchHeadlines();  	
+  }
+
+  fetchHeadlines() {
+  	this.feed = [];
+  	this.words = {};
+  	this.selected = '';
 		this.http.get('/')	
 		.then(feed => {
 			this.feed = JSON.parse(feed.response);
-			this.parseWords(this.feed);
+			this.currentAsOf = new Date();
+			this.parseWords();
 		});
   }
 
-  parseWords(feed) {
+  parseWords() {
 
-  	feed.forEach(item => {
-  		let punctuationless = item.title.toLowerCase().replace(/[.,\/#!$%\^&\*;:{}=\-_`'~()]/g,'');
+  	this.feed.forEach(item => {
+  		item.words = [];
+  		let punctuationless = item.title.toLowerCase().replace(/[.,\/#!$%\^&\*;:{}?=\-_`'~()]/g,'');
   		let words = sw.removeStopwords(punctuationless.split(' '));
   		words.forEach(word => {
-  			if (this.words[word]) {
-  				this.words[word]++;
-  			} else {
-  				this.words[word] = 1;
+  			// Skip any pure integers
+  			if (Number(word) != word) {
+	  			item.words.push(word);
+	  			if (this.words[word]) {
+	  				this.words[word]++;
+	  			} else {
+	  				this.words[word] = 1;
+	  			}  				
   			}
   		});
   	});
-  	console.log(this.words);
+
+    for (const prop in this.words) {
+      if (this.words.hasOwnProperty(prop)) {
+        if (this.words[prop] == 1) {
+          delete this.words[prop];
+        }
+      } 
+    }    
+
   	this.wordcloud();
   }
 
   wordcloud() {
 
 		var svg_location = "#chart";
-    var width = 900;
+    var width = $('#container').width();
     var height = 500;
 		var fill = d3.scaleOrdinal(d3.schemeCategory20);
 		var word_entries = d3.entries(this.words);
+		var self = this;
 
 		var xScale = d3.scaleLinear()
       .domain([0, d3.max(word_entries, function(d) {
@@ -65,7 +88,7 @@ export class App {
       .start();
 
     function draw(words) {
-    	console.log(words);
+    	$('svg').remove();
       d3.select(svg_location).append("svg")
           .attr("width", width)
           .attr("height", height)
@@ -81,11 +104,52 @@ export class App {
           .attr("transform", function(d) {
             return "translate(" + [d.x, d.y] + ")rotate(" + d.rotate + ")";
           })
-          .text(function(d) { return d.key; });
+          .text(function(d) { return d.key; })
+          .attr('cursor', 'pointer')
+          .on('click', d => {
+          	self.selected = ` (filter: ${d.text})`;
+
+            $('.headlines').each((key, headline) => {
+              if ($(headline).data('words').split(',').filter(x => { return x === d.text }).length > 0) {
+                $(headline).css('display', 'table-row');
+              } else {
+                $(headline).css('display', 'none');
+              }
+
+            });
+
+			    })
+			    .on('mouseover', d => {
+			    	$('text').each((item, value) => {
+			    		if (value.innerHTML === d.text) {
+			    			$(value).stop().animate({
+			    				opacity: 1
+			    			}, 500); 
+			    		}	else {
+			    			$(value).stop().animate({
+			    				opacity: 0.2
+			    			}, 500); 
+			    		}
+			    	});
+			    })
+			    .on('mouseout', d => {
+	    			$('text').stop().animate({
+	    				opacity: 1
+	    			}, 500); 
+			    });
+
     }
 
     cloud.default().stop();
 
+  }
+
+  clearFilter() {
+  	this.selected = '';
+  	let all = document.querySelectorAll('.headlines');
+  	for (let i = 0; i < all.length; i++) {
+  		all[i].style.display = 'table-row';
+  	}
   }
 
 }

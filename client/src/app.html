@@ -1,18 +1,38 @@
 <template>
-	<div id="chart"></div>
-  <h1>Feed</h1>
-  <table>
-  	<thead>
-  		<tr>
-  			<th>Title</th>
-  			<th>Date</th>
-  		</tr>
-  	</thead>
-  	<tbody>
-  		<tr repeat.for="item of feed">
-  			<td>${item.title}</td>
-  			<td>${item.date}</td>
-  		</tr>
-  	</tbody>
-  </table>
+	<require from="./resources/value-converters/date-format"></require>
+	<div id="container" class="container">
+	  <div class="row">
+		  <div class="col">
+			  <h1 class="float-left">FAA Safety News Trends</h1>
+			  <div id="chart"></div>
+			  <div class="text-center">
+			  	<p>
+			  		Current as of <span>${currentAsOf | dateFormat}</span><br />
+			  	</p>
+			  	<p>
+			  		<button type="button" class="btn btn-primary" click.delegate="fetchHeadlines()">Refresh</button>
+			  	</p>
+			  </div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col">
+			  <h2>Headlines</h2>
+			  <table class="table table-hover">
+			  	<thead>
+			  		<tr>
+			  			<th>Title ${selected} <a if.bind="selected !== ''" href="#" click.delegate="clearFilter()">Clear Filter</a></th>
+			  			<th>Date</th>
+			  		</tr>
+			  	</thead>
+			  	<tbody>
+			  		<tr class="headlines" data-words="${item.words}" repeat.for="item of feed">
+			  			<td>${item.title}</td>
+			  			<td>${item.date | dateFormat}</td>
+			  		</tr>
+			  	</tbody>
+			  </table>
+			</div>
+		</div>
+	</div>
 </template>
