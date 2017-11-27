@@ -77,7 +77,7 @@ cron.schedule('*/5 * * * *', function() {
 		feed.forEach(item => {
 
 			Feed.update(
-		    item, 
+		    {title: item.title}, 
 		    {$setOnInsert: item}, 
 		    {upsert: true}, 
 		    function(err, numAffected) {
