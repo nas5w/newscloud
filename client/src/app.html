@@ -22,12 +22,14 @@
 			  	<thead>
 			  		<tr>
 			  			<th>Title ${selected} <a if.bind="selected !== ''" href="#" click.delegate="clearFilter()">Clear Filter</a></th>
+			  			<th>Link</th>
 			  			<th>Date</th>
 			  		</tr>
 			  	</thead>
 			  	<tbody>
 			  		<tr class="headlines" data-words="${item.words}" repeat.for="item of feed">
 			  			<td>${item.title}</td>
+			  			<td><a href="${item.link}">${item.link}</a></td>
 			  			<td>${item.date | dateFormat}</td>
 			  		</tr>
 			  	</tbody>

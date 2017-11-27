@@ -16,7 +16,7 @@ app.use(cors());
 app.use('/', routes);
 
 // Refresh news every 5 minutes
-cron.schedule('*/5 * * * *', function() {
+cron.schedule('*/1 * * * *', function() {
 
 	var req = request('https://news.google.com/news/rss/search/section/q/%22federal%20aviation%20administration%22/%22federal%20aviation%20administration%22?hl=en&gl=US&ned=us');
 	var feedparser = new FeedParser();
@@ -60,9 +60,9 @@ cron.schedule('*/5 * * * *', function() {
 
 		  // we're connected, save items
 		  while (item = stream.read()) {
-
 		    feed.push({
 		    	title: item.title, 
+		    	link: item.link,
 		    	date: new Date(item.pubDate)
 		    });
 
@@ -77,7 +77,7 @@ cron.schedule('*/5 * * * *', function() {
 		feed.forEach(item => {
 
 			Feed.update(
-		    {title: item.title}, 
+		    {link: item.link}, 
 		    {$setOnInsert: item}, 
 		    {upsert: true}, 
 		    function(err, numAffected) {

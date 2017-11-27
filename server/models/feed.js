@@ -3,6 +3,7 @@ var Schema = mongoose.Schema;
 
 var feedSchema = new Schema({
    title: String,
+   link: String,
    date: Date
 });
 
