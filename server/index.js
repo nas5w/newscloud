@@ -16,7 +16,7 @@ app.use(cors());
 app.use('/', routes);
 
 // Refresh news every 5 minutes
-cron.schedule('*/5 * * * *', function(){
+cron.schedule('*/5 * * * *', function() {
 
 	var req = request('https://news.google.com/news/rss/search/section/q/%22federal%20aviation%20administration%22/%22federal%20aviation%20administration%22?hl=en&gl=US&ned=us');
 	var feedparser = new FeedParser();
