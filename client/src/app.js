@@ -13,10 +13,12 @@ export class App {
 		    x.withBaseUrl('http://localhost:3000');
 		  });
 
+    this.recurrence = 2;
+
   }
 
   attached() {
-  	this.fetchHeadlines();  	
+  	this.fetchHeadlines(); 
   }
 
   fetchHeadlines() {
@@ -35,7 +37,7 @@ export class App {
 
   	this.feed.forEach(item => {
   		item.words = [];
-  		let punctuationless = item.title.toLowerCase().replace(/[.,\/#!$%\^&\*;:{}?=\-_`'~()]/g,'');
+  		let punctuationless = item.title.toLowerCase().replace(/[.,\/#!$%\^&\*;:{}?=\-—_`'~()]/g,'');
   		let words = sw.removeStopwords(punctuationless.split(' '));
   		words.forEach(word => {
   			// Skip any pure integers
@@ -52,7 +54,7 @@ export class App {
 
     for (const prop in this.words) {
       if (this.words.hasOwnProperty(prop)) {
-        if (this.words[prop] == 1) {
+        if (this.words[prop] < this.recurrence) {
           delete this.words[prop];
         }
       } 

@@ -16,7 +16,7 @@ app.use(cors());
 app.use('/', routes);
 
 // Refresh news every 5 minutes
-cron.schedule('*/1 * * * *', function() {
+cron.schedule('*/5 * * * *', function() {
 
 	var req = request('https://news.google.com/news/rss/search/section/q/%22federal%20aviation%20administration%22/%22federal%20aviation%20administration%22?hl=en&gl=US&ned=us');
 	var feedparser = new FeedParser();
@@ -37,7 +37,7 @@ cron.schedule('*/1 * * * *', function() {
 	  var stream = this; // `this` is `req`, which is a stream
 	 
 	  if (res.statusCode !== 200) {
-	    this.emit('error', new Error('Bad status code'));
+	    this.emit('error', new Error(`Bad status code: ${res.statusCode}`));
 	  }
 	  else {
 	    stream.pipe(feedparser);

@@ -7,6 +7,9 @@
 			  <div id="chart"></div>
 			  <div class="text-center">
 			  	<p>
+			  		Minimum word recurrence: <input type="number" value.bind="recurrence" input.delegate="fetchHeadlines()" />
+			  	</p>
+			  	<p>
 			  		Current as of <span>${currentAsOf | dateFormat}</span><br />
 			  	</p>
 			  	<p>
