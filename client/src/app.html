@@ -27,7 +27,7 @@
 
 				  <div id="refresh">
 					  <p class="small">Last refreshed: ${ currentAsOf | dateFormat } ET<br />
-					  Next refresh: ${ refreshTimeLeft } seconds</p>
+					  Next refresh: ${ refreshTimeLeft } second<span if.bind="refreshTimeLeft!==1">s</span></p>
 					</div>
 
 				  <ul>
