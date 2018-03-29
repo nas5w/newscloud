@@ -1,3 +1,9 @@
+@font-face {
+  font-family: 'bebas';
+  src: url('fonts/bebas.ttf')  format('truetype'),
+	  url('fonts/bebas.otf')  format('otf');
+}
+
 * {
 	border-radius: 0 !important;
 }
@@ -8,8 +14,17 @@ body {
 }
 
 h1, h2, h3 {
+	font-family: 'bebas';
 	text-transform: uppercase;
 	padding: 10px;
+}
+
+#header h1 {
+	padding: 25px 20px 20px 20px;
+}
+
+#headlines h2 {
+	border-bottom: 3px solid rgba(255, 255, 255, 0.9);
 }
 
 
@@ -46,7 +61,7 @@ ul {
 }
 
 #headlines a {
-	color: rgba(255, 255, 255, 0.8);
+	color: #FCFCFC;
 }
 
 #headlines a:hover {
