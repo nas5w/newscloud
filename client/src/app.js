@@ -68,8 +68,10 @@ export class App {
   wordcloud() {
 
 		var svg_location = '#chart';
-    var width = $('.col-md-9').width();
-    var height = $(window).height() - $('#title').height() - $('#controls').height() - 50;
+    var width = $('.col-md-9').width() * 0.9;
+    var height = ($(window).height() - $('#title').height() - $('#controls').height() - 50) * 0.9;
+    $('#chart').css('margin-left', $('.col-md-9').width() * 0.05);
+    $('#chart').css('margin-top', ($(window).height() - $('#title').height() - $('#controls').height() - 50) * 0.05);
 		var fill = d3.scaleOrdinal(d3.schemeCategory20);
 		var word_entries = d3.entries(this.words);
 		var self = this;
