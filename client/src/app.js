@@ -13,12 +13,14 @@ export class App {
 		    x.withBaseUrl('http://localhost:3000');
 		  });
 
-    this.recurrence = 2;
+    this.recurrence = 1;
 
   }
 
   attached() {
   	this.fetchHeadlines(); 
+    $('#headlines').height($(window).height());
+    $('#container').height($(window).height());
   }
 
   fetchHeadlines() {
@@ -66,8 +68,8 @@ export class App {
   wordcloud() {
 
 		var svg_location = '#chart';
-    var width = $('#container').width();
-    var height = 500;
+    var width = $('.col-md-9').width();
+    var height = $(window).height() - $('#title').height() - $('#controls').height() - 50;
 		var fill = d3.scaleOrdinal(d3.schemeCategory20);
 		var word_entries = d3.entries(this.words);
 		var self = this;
@@ -109,11 +111,11 @@ export class App {
           .text(function(d) { return d.key; })
           .attr('cursor', 'pointer')
           .on('click', d => {
-          	self.selected = ` (filter: ${d.text})`;
+          	self.selected = d.text;
 
             $('.headlines').each((key, headline) => {
               if ($(headline).data('words').split(',').filter(x => { return x === d.text }).length > 0) {
-                $(headline).css('display', 'table-row');
+                $(headline).css('display', 'list-item');
               } else {
                 $(headline).css('display', 'none');
               }
@@ -150,7 +152,7 @@ export class App {
   	this.selected = '';
   	let all = document.querySelectorAll('.headlines');
   	for (let i = 0; i < all.length; i++) {
-  		all[i].style.display = 'table-row';
+  		all[i].style.display = 'list-item';
   	}
   }
 

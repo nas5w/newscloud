@@ -1,43 +1,38 @@
 <template>
+	<require from="bootstrap/css/bootstrap.css"></require>
+	<require from="./assets/style.css"></require>
 	<require from="./resources/value-converters/date-format"></require>
-	<div id="container" class="container">
-	  <div class="row">
-		  <div class="col">
-			  <h1 class="float-left">FAA Safety News Trends</h1>
+	<div id="container" class="container-flluid">
+		<div class="row">
+		  <div id="main-frame" class="col-md-9">
+		  	<div id="header">
+			  	<h1 class="col-md-12" id="title" class="float-left">FAA Safety News Trends</h1>
+				</div>
 			  <div id="chart"></div>
-			  <div class="text-center">
+			  <div id="controls" class="col-md-12 text-center">
 			  	<p>
 			  		Minimum word recurrence: <input type="number" value.bind="recurrence" input.delegate="fetchHeadlines()" />
 			  	</p>
-			  	<p>
-			  		Current as of <span>${currentAsOf | dateFormat}</span><br />
-			  	</p>
-			  	<p>
-			  		<button type="button" class="btn btn-primary" click.delegate="fetchHeadlines()">Refresh</button>
-			  	</p>
 			  </div>
 			</div>
-		</div>
-		<div class="row">
-			<div class="col">
-			  <h2>Headlines</h2>
-			  <table class="table table-hover">
-			  	<thead>
-			  		<tr>
-			  			<th>Title ${selected} <a if.bind="selected !== ''" href="#" click.delegate="clearFilter()">Clear Filter</a></th>
-			  			<th>Link</th>
-			  			<th>Date</th>
-			  		</tr>
-			  	</thead>
-			  	<tbody>
-			  		<tr class="headlines" data-words="${item.words}" repeat.for="item of feed">
-			  			<td>${item.title}</td>
-			  			<td><a href="${item.link}">${item.link}</a></td>
-			  			<td>${item.date | dateFormat}</td>
-			  		</tr>
-			  	</tbody>
-			  </table>
-			</div>
+		  <div id="headlines" class="col-md-3">
+			  <h2>Headlines
+				  <span if.bind="selected" class="badge badge-primary">
+				  	${ selected }
+	 					<a href="#" click.delegate="clearFilter()"><span aria-hidden="true">&times;</span></a>
+				  </span>
+			  </h2>
+				
+			  <ul>
+			  	<li class="headlines" data-words="${item.words}" repeat.for="item of feed">
+			  		<a href="${item.link}">${item.title}</a><br />
+			  		<div class="date">
+			  			<span>${item.date | dateFormat}</span>
+			  		</div>
+			  	</li>
+			  </ul>
+		  	
+		  </div>
 		</div>
 	</div>
 </template>
