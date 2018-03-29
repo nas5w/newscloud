@@ -14,24 +14,51 @@ export class App {
 		  });
 
     this.recurrence = 1;
-
+    // Refresh timer is in seconds
+    this.refreshTimer = 30;
+    this.refreshTimeLeft = this.refreshTimer;
   }
 
   attached() {
   	this.fetchHeadlines(); 
     $('#headlines').height($(window).height());
     $('#container').height($(window).height());
+
+
+    setInterval(() => { 
+      this.fetchHeadlines();
+      this.refreshTimeLeft = this.refreshTimer;
+    }, this.refreshTimer * 1000);
+    
+    setInterval(() => { 
+      this.refreshTimeLeft--;
+    }, 1000);
+
   }
 
   fetchHeadlines() {
-  	this.feed = [];
-  	this.words = {};
-  	this.selected = '';
-		this.http.get('/')	
+    $('#time-bar').stop();
+    $('#time-bar').css('width', '1px');
+    $('#time-bar').animate({
+      width: `${$(window).width()}px`
+    }, this.refreshTimer * 1000, 'linear');
+
+    if(this.feed) {
+      this.feedLength = this.feed.length;
+    } else {
+      this.feedLength = 0;
+    }
+
+  	this.http.get('/')	
 		.then(feed => {
-			this.feed = JSON.parse(feed.response);
-			this.currentAsOf = new Date();
-			this.parseWords();
+			this.currentAsOf = Date();
+      if (this.feedLength !== JSON.parse(feed.response).length) {
+        this.feed = JSON.parse(feed.response);
+        this.words = {};
+        this.selected = '';
+        this.parseWords();
+      }
+
 		});
   }
 

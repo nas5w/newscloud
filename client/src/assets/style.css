@@ -14,7 +14,14 @@ h1, h2, h3 {
 
 
 ul {
+	padding-left: 30px;
 	list-style-type: square;
+}
+
+#container {
+	margin: 0;
+	padding: 0;
+	position: relative;
 }
 
 #main-frame {
@@ -35,6 +42,7 @@ ul {
 	overflow-y: auto;
 	overflow-x: hidden;
 	clear: both;
+	padding: 0;
 }
 
 #headlines a {
@@ -55,4 +63,22 @@ ul {
 	text-transform: uppercase;
 	font-size: 12px;
 	padding: 1px 5px 1px 5px;
+}
+
+#refresh {
+	padding-left: 12px;
+}
+
+#time-bar {
+	position: absolute;
+	top: 0;
+	z-index: 10;
+	height: 5px;
+	width: 1px;
+	background-color: rgb(131, 202, 110);
+	margin:0; 
+}
+
+#headline-container {
+	padding: 10px 20px;
 }

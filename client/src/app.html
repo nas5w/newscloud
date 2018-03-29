@@ -2,7 +2,8 @@
 	<require from="bootstrap/css/bootstrap.css"></require>
 	<require from="./assets/style.css"></require>
 	<require from="./resources/value-converters/date-format"></require>
-	<div id="container" class="container-flluid">
+	<div id="container" class="container-fluid">
+		<div id="time-bar"></div>
 		<div class="row">
 		  <div id="main-frame" class="col-md-9">
 		  	<div id="header">
@@ -16,23 +17,30 @@
 			  </div>
 			</div>
 		  <div id="headlines" class="col-md-3">
-			  <h2>Headlines
-				  <span if.bind="selected" class="badge badge-primary">
-				  	${ selected }
-	 					<a href="#" click.delegate="clearFilter()"><span aria-hidden="true">&times;</span></a>
-				  </span>
-			  </h2>
-				
-			  <ul>
-			  	<li class="headlines" data-words="${item.words}" repeat.for="item of feed">
-			  		<a href="${item.link}">${item.title}</a><br />
-			  		<div class="date">
-			  			<span>${item.date | dateFormat}</span>
-			  		</div>
-			  	</li>
-			  </ul>
-		  	
-		  </div>
+		  	<div id="headline-container">
+				  <h2>Headlines
+					  <span if.bind="selected" class="badge badge-primary">
+					  	${ selected }
+		 					<a href="#" click.delegate="clearFilter()"><span aria-hidden="true">&times;</span></a>
+					  </span>
+				  </h2>
+
+				  <div id="refresh">
+					  <p class="small">Last refreshed: ${ currentAsOf | dateFormat } ET<br />
+					  Next refresh: ${ refreshTimeLeft } seconds</p>
+					</div>
+
+				  <ul>
+				  	<li class="headlines" data-words="${item.words}" repeat.for="item of feed">
+				  		<a href="${item.link}">${item.title}</a><br />
+				  		<div class="date">
+				  			<span>${item.date | dateFormat} ET</span>
+				  		</div>
+				  	</li>
+				  </ul>
+			  	
+			  </div>
+			</div>
 		</div>
 	</div>
 </template>
