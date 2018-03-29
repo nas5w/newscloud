@@ -51,10 +51,9 @@ export class App {
 
   	this.http.get('/')	
 		.then(feed => {
-			this.currentAsOf = Date();
+			this.currentAsOf = new Date();
       if (this.feedLength !== JSON.parse(feed.response).length) {
         this.feed = JSON.parse(feed.response);
-        this.words = {};
         this.selected = '';
         this.parseWords();
       }
@@ -63,6 +62,8 @@ export class App {
   }
 
   parseWords() {
+
+    this.words = {};
 
   	this.feed.forEach(item => {
   		item.words = [];
