@@ -34,6 +34,7 @@
 				  	<li class="headlines" css="display: ${item.hide ? 'none' : 'list-item' }" repeat.for="item of feed">
 				  		<a href="${item.link}">${item.title}</a><br />
 				  		<div class="date">
+				  			<span>${extractHostname(item.link)}</span>&nbsp;
 				  			<span>${item.date | dateFormat} ET</span>
 				  		</div>
 				  	</li>
