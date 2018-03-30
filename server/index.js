@@ -15,10 +15,19 @@ app.use(cors());
 //  Connect all our routes to our application
 app.use('/', routes);
 
-// Refresh news every 5 minutes
-cron.schedule('*/5 * * * *', function() {
+// Refresh news every minute
+cron.schedule('* * * * *', function() {
 
-	var req = request('https://news.google.com/news/rss/search/section/q/%22federal%20aviation%20administration%22/%22federal%20aviation%20administration%22?hl=en&gl=US&ned=us');
+	let allSearchTerms = [
+		'"federal aviation administration"',
+		'faa',
+		'"air traffic control"',
+		'"aviation safety"'
+	];
+
+	let searchTerm = encodeURI(allSearchTerms[Math.floor(Math.random() * allSearchTerms.length)]);
+	console.log(`Search for ${searchTerm}`);
+	var req = request(`https://news.google.com/news/rss/search/section/q/${searchTerm}/${searchTerm}?hl=en&gl=US&ned=us`);
 	var feedparser = new FeedParser();
   let feed = [];
 

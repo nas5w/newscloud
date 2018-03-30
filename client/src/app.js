@@ -13,10 +13,26 @@ export class App {
 		    x.withBaseUrl('http://localhost:3000');
 		  });
 
-    this.recurrence = 1;
+    this.recurrence = 3;
     // Refresh timer is in seconds
     this.refreshTimer = 30;
     this.refreshTimeLeft = this.refreshTimer;
+
+    this.removeWords = [
+      'faa',
+      'traffic',
+      'air',
+      'control',
+      'aviation',
+      'not',
+      'say',
+      'flying',
+      'pilots',
+      'pilot',
+      'just',
+      'something'
+    ];
+
   }
 
   attached() {
@@ -70,8 +86,8 @@ export class App {
   		let punctuationless = item.title.toLowerCase().replace(/[.,\/#!$%\^&\*;:{}?=\-—_`'~()]/g,'');
   		let words = sw.removeStopwords(punctuationless.split(' '));
   		words.forEach(word => {
-  			// Skip any pure integers
-  			if (Number(word) != word) {
+  			// Skip any pure integers or uninteresting words
+  			if (Number(word) != word && !this.removeWords.includes(word)) {
 	  			item.words.push(word);
 	  			if (this.words[word]) {
 	  				this.words[word]++;
@@ -141,15 +157,15 @@ export class App {
           .text(function(d) { return d.key; })
           .attr('cursor', 'pointer')
           .on('click', d => {
-          	self.selected = d.text;
+          	
+            self.selected = d.text;
 
-            $('.headlines').each((key, headline) => {
-              if ($(headline).data('words').split(',').filter(x => { return x === d.text }).length > 0) {
-                $(headline).css('display', 'list-item');
+            self.feed.forEach(item => {
+              if (item.words.includes(d.text)) {
+                item.hide = false;
               } else {
-                $(headline).css('display', 'none');
+                item.hide = true;
               }
-
             });
 
 			    })
@@ -179,11 +195,10 @@ export class App {
   }
 
   clearFilter() {
+    this.feed.forEach(item => {
+      item.hide = false;
+    });
   	this.selected = '';
-  	let all = document.querySelectorAll('.headlines');
-  	for (let i = 0; i < all.length; i++) {
-  		all[i].style.display = 'list-item';
-  	}
   }
 
 }
