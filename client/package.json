@@ -20,7 +20,6 @@
     "natural": "^0.5.4",
     "requirejs": "^2.3.2",
     "stemmer": "^1.0.2",
-    "stopword": "^0.1.9",
     "text": "github:requirejs/text#latest"
   },
   "peerDependencies": {},

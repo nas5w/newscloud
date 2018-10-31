@@ -2,7 +2,6 @@ import {inject} from 'aurelia-framework';
 import {HttpClient} from 'aurelia-http-client';
 import * as d3 from 'd3';
 import * as cloud from 'd3-cloud';
-import * as sw from 'stopword';
 
 @inject(HttpClient)
 export class App {
@@ -34,7 +33,9 @@ export class App {
       'safety',
       'airport',
       'flight',
-      'flights'
+      'flights',
+      'new',
+      'perfect'
     ];
 
   }
@@ -88,7 +89,7 @@ export class App {
   	this.feed.forEach(item => {
   		item.words = [];
   		let punctuationless = item.title.toLowerCase().replace(/[.,\/#!$%\^&\*;:{}?=\-—_`'~()]/g,'');
-  		let words = sw.removeStopwords(punctuationless.split(' '));
+  		let words = this.removeStopwords(punctuationless);
   		words.forEach(word => {
   			// Skip any pure integers or uninteresting words
   			if (Number(word) != word && !this.removeWords.includes(word)) {
@@ -222,6 +223,22 @@ export class App {
     hostname = hostname.split('?')[0];
 
     return hostname;
+  }
+
+  removeStopwords(sentence) {
+    let stopwords = [
+      'about', 'after', 'all', 'also', 'am', 'an', 'and', 'another', 'any', 'are', 'as', 'at', 'be',
+      'because', 'been', 'before', 'being', 'between', 'both', 'but', 'by', 'came', 'can',
+      'come', 'could', 'did', 'do', 'each', 'for', 'from', 'get', 'got', 'has', 'had',
+      'he', 'have', 'her', 'here', 'him', 'himself', 'his', 'how', 'if', 'in', 'into',
+      'is', 'it', 'like', 'make', 'many', 'me', 'might', 'more', 'most', 'much', 'must',
+      'my', 'never', 'now', 'of', 'on', 'only', 'or', 'other', 'our', 'out', 'over',
+      'said', 'same', 'see', 'should', 'since', 'some', 'still', 'such', 'take', 'than',
+      'that', 'the', 'their', 'them', 'then', 'there', 'these', 'they', 'this', 'those',
+      'through', 'to', 'too', 'under', 'up', 'very', 'was', 'way', 'we', 'well', 'were',
+      'what', 'where', 'which', 'while', 'who', 'with', 'would', 'you', 'your', 'a', 'i'];
+
+    return sentence.split(' ').filter(x => !stopwords.includes(x.toLowerCase()));
   }
 
 }

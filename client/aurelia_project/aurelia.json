@@ -120,11 +120,6 @@
           "aurelia-templating",
           "aurelia-templating-binding",
           {
-            "name": "stopword",
-            "path": "../node_modules/stopword/lib",
-            "main": "stopword"
-          },
-          {
             "name": "d3",
             "path": "../node_modules/d3/build",
             "main": "d3"

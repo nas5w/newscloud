@@ -19,10 +19,9 @@ app.use('/', routes);
 cron.schedule('* * * * *', function() {
 
 	let allSearchTerms = [
-		'"federal aviation administration"',
-		'faa',
-		'"air traffic control"',
-		'"aviation safety"'
+		'apple',
+		'iphone',
+		'macbook'
 	];
 
 	let searchTerm = encodeURI(allSearchTerms[Math.floor(Math.random() * allSearchTerms.length)]);
@@ -62,9 +61,8 @@ cron.schedule('* * * * *', function() {
 	db.once('open', function() {
 		 
 		feedparser.on('readable', function () {
-		  // This is where the action is!
-		  var stream = this; // `this` is `feedparser`, which is a stream
-		  var meta = this.meta; // **NOTE** the "meta" is always available in the context of the feedparser instance
+		  var stream = this;
+		  var meta = this.meta;		  
 		  var item;
 
 		  // we're connected, save items

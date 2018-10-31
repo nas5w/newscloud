@@ -2,8 +2,8 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
 var feedSchema = new Schema({
-   title: String,
-   link: String,
+   title: { type: String, unique: true },
+   link: { type: String, unique: true },
    date: Date
 });
 
