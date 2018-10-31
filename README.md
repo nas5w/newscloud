@@ -8,31 +8,39 @@ This app requires you have MongoDB installed first!
 
 ### Installing
 Clone down the app:
+
 `git clone https://github.com/nas5w/newscloud.git`
+
 Install node server packages and star the server
+
 ~~~~
 cd newscloud/server
 npm i
 node .	
 ~~~~
+
 Install the Aurelia CLI if you don't have it
+
 `npm i -g aurelia-cli`
+
 Install node client packages and run the Aurelia app
+
 ~~~~
 cd ../client
 npm i
 au run
 ~~~~
+
 Note that you won't see any wordclouds for a few minutes as the server will take a few minutes to accumulate headlines. See the `server/index.js` file for how periodic headline retrieval works.
 
 ## Contributing
 Please feel free to submit a pull request!
 
 ## License
-The MIT License (MIT)
-=====================
 
-Copyright © `<year>`
+### The MIT License (MIT)
+
+Copyright © 2018
 
 Permission is hereby granted, free of charge, to any person
 obtaining a copy of this software and associated documentation
